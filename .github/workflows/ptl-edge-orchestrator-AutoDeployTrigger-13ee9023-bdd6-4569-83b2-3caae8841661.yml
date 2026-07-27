@@ -1,0 +1,45 @@
+name: Trigger auto deployment for ptl-edge-orchestrator
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/ptl-edge-orchestrator-AutoDeployTrigger-13ee9023-bdd6-4569-83b2-3caae8841661.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.PTLEDGEORCHESTRATOR_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}src_orchestrator
+          _dockerfilePathKey_: _dockerfilePath_
+          _targetLabelKey_: _targetLabel_
+          registryUrl: ghcr.io
+          registryUsername: ${{ secrets.PTLEDGEORCHESTRATOR_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.PTLEDGEORCHESTRATOR_REGISTRY_PASSWORD }}
+          containerAppName: ptl-edge-orchestrator
+          resourceGroup: PlayLabels
+          imageToBuild: ghcr.io/ptl-edge-orchestrator:${{ github.sha }}
+          
+            
+
+     
+
