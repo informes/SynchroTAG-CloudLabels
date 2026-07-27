@@ -29,15 +29,14 @@ jobs:
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
         with:
-          appSourcePath: ${{ github.workspace }}src_orchestrator
-          _dockerfilePathKey_: _dockerfilePath_
-          _targetLabelKey_: _targetLabel_
+          appSourcePath: ${{ github.workspace }}/src_orchestrator
+          dockerfilePath: Dockerfile
           registryUrl: ghcr.io
           registryUsername: ${{ secrets.PTLEDGEORCHESTRATOR_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.PTLEDGEORCHESTRATOR_REGISTRY_PASSWORD }}
           containerAppName: ptl-edge-orchestrator
           resourceGroup: PlayLabels
-          imageToBuild: ghcr.io/ptl-edge-orchestrator:${{ github.sha }}
+          imageToBuild: ghcr.io/informes/ptl-edge-orchestrator:${{ github.sha }}
           
             
 
