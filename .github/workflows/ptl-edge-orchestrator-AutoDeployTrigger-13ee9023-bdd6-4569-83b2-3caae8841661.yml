@@ -30,7 +30,7 @@ jobs:
         uses: azure/container-apps-deploy-action@v2
         with:
           appSourcePath: ${{ github.workspace }}/src_orchestrator
-          dockerfilePath: Dockerfile
+          dockerfilePath: src_orchestrator/Dockerfile
           registryUrl: ghcr.io
           registryUsername: ${{ secrets.PTLEDGEORCHESTRATOR_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.PTLEDGEORCHESTRATOR_REGISTRY_PASSWORD }}
