@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app/
 
 # Instalar dependencias (si existe un archivo requirements.txt, lo instala; si no, sigue de largo)
-RUN if [ -f requirements.txt ]; then pip install --no-cache-dir -r requirements.txt; fi
+RUN pip install --no-cache-dir -r src_orchestrator/requirements.txt
 
 # Ejecutar el código Python
 # OJO ACÁ: Cambiá 'main.py' por el nombre real de tu archivo principal
